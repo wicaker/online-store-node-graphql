@@ -38,8 +38,9 @@ const productSchema = new Schema(
       required: true
     },
     picture: {
-      data: Buffer,
-      contentType: String,
+      // data: Buffer,
+      // contentType: String
+      type: String
     },
     discount: String,
     seller: {
@@ -56,4 +57,4 @@ const productSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model('Product', productSchema);
+module.exports = mongoose.model("Product", productSchema);
