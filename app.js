@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const graphqlHttp = require("express-graphql"); // graphql midleware function
 const cloudinary = require("cloudinary");
 const formData = require("express-form-data");
+const path = require('path')
 const port = process.env.PORT || 5000;
 
 const isAuth = require("./middleware/is-auth");
@@ -60,6 +61,13 @@ app.post("/image-upload", (req, res) => {
   const promises = values.map(image => cloudinary.uploader.upload(image.path));
   Promise.all(promises).then(results => res.json(results));
 });
+
+// serve static front end
+app.use('/', express.static(path.join(__dirname, 'dist')));
+app.get('*', function (req, res) {
+  res.sendFile(path.join(__dirname, './build/index.html'));
+});
+
 
 //Connect to database mongodb trough mongoose
 mongoose
